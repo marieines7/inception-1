@@ -18,7 +18,7 @@ if [ ! -f "wp-config.php" ]; then
 	sleep 5 
 
 	# Attention il y a un vrai pb avec le user sur ubuntu
-	wp core download
+	wp core download --allow-root
 
 	#sleep 5
 	# Configuration du site wordpress
