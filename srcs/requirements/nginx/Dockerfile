@@ -1,12 +1,13 @@
-# La version 3.15 bug avec ces commandes
-FROM	alpine:3.13
+FROM	debian:buster
 
 # Mise a jour du gestionnaire de paquet
-RUN		apk update
+RUN		apt-get update && apt-get upgrade -y
 
 # Installation de nginx et openssl
-RUN		apk add --no-cache --quiet --update nginx
-RUN		apk add --no-cache --quiet --update openssl
+#RUN		apt-get install  --no-cache --quiet --update nginx curl php8 php8-ctype
+RUN		apt-get install -y nginx curl openssl bash
+
+#RUN		apk add --no-cache --quiet --update openssl
 
 # Creation du dossier qui va recueillir le certificat et la cle (pour HTTPS)
 RUN		mkdir -p /etc/nginx/ssl

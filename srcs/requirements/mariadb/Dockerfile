@@ -1,11 +1,15 @@
 # Depuis l'image la plus legere
-FROM	alpine:3.13
+#FROM	debian:buster
+FROM alpine:3.14
 
 # Mise a jour du gestionnaire de paquet, bonne pratique
-RUN		apk update
+ RUN		apk update
+# Mise a jour du gestionnaire de paquet
+#RUN		apt-get update && apt-get upgrade -y
 
 # Installation de mariadb et mariadb client
 RUN		apk add --no-cache --quiet --update mariadb mariadb-client vim
+#UN		apt-get install -y mariadb-server mariadb-client vim bash
 
 # Creation du dossier pour le daemon
 RUN 	mkdir -p /var/lib/mysqld /run/mysqld
@@ -30,4 +34,4 @@ RUN		chown -R mysql:mysql /var/lib/mysql
 # Attribution des droits pour le daemon
 RUN 	chown -R mysql:mysql /run/mysqld
 
-ENTRYPOINT [ "sh", "entrypoint.sh" ]
+ENTRYPOINT [ "bash", "entrypoint.sh" ]
