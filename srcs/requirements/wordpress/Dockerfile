@@ -12,33 +12,40 @@ RUN		apt-get update && apt-get upgrade -y
 
 RUN		apt-get install -y curl bash vim wget
 RUN		apt-get install -y mariadb-client
-RUN		apt-get install -y php7.3 php-mysql php-fpm php-mysqli
+RUN		apt-get install -y php7.3 php-mysql php-fpm php-mysqli php-curl \
+    php-gd php-mbstring php-xml php-xmlrpc php-soap php-intl php-zip
 
 # On cree le dossier "standard"
 RUN		mkdir -p /var/www/wordpress 
 
 # Telecharger de la wordpress cli + ajout des droits d execution puisque c est une commande
-# RUN		curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-#			--output /usr/bin/wp
+RUN		curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+			--output /usr/bin/wp
 
-RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+#  RUN     wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
 # On ajoute les droits d execution sur la command wp cli
-#RUN		chmod +x ./usr/bin/wp 
-RUN 	chmod 777 wp-cli.phar
-RUN  	mv wp-cli.phar /usr/local/bin/wp
+RUN		chmod +x ./usr/bin/wp 
+#RUN 	chmod 777 wp-cli.phar
+# RUN  	mv wp-cli.phar /usr/local/bin/wp
 
 # https://www.linode.com/docs/guides/how-to-install-wordpress-using-wp-cli-on-debian-10/
-RUN 	cd ~ wget https://github.com/wp-cli/wp-cli/raw/master/utils/wp-completion.bash
+#RUN 	cd ~ wget https://github.com/wp-cli/wp-cli/raw/master/utils/wp-completion.bash
 
-RUN 	echo "source /home/$USER/wp-completion.bash" >> .bashrc
+#RUN 	echo "source /home/$USER/wp-completion.bash" >> .bashrc
 
-RUN		touch .bashrc
-RUN 	bash
-RUN     source ~/.bashrc
+#RUN		touch .bashrc
 
+#RUN     ln -sf /bin/bash /bin/sh
+#RUN     source ~/.bashrc
+
+#RUN     /usr/sbin/useradd -m -d /home/WPUSER/ -s /bin/bash WPUSER 
+#RUN     echo -e "password\npassword" | passwd WPUSER
+#RUN     chmod 700 /home/WPUSER/
 # Telechargement de wordpress via la wp cli
-RUN		wp core download 
+#RUN		su - WPUSER 
+
+#RUN     wp core download 
 #--path=/var/www/wordpress
 # --version=5.8.1
 

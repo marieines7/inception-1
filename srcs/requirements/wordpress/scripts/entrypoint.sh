@@ -17,6 +17,10 @@ if [ ! -f "wp-config.php" ]; then
 
 	sleep 5 
 
+	# Attention il y a un vrai pb avec le user sur ubuntu
+	wp core download
+
+	#sleep 5
 	# Configuration du site wordpress
 	wp core install --url="$WP_URL" --title="$WP_TITLE" --admin_user="$WP_ADMIN_USER" \
     	--admin_password="$WP_ADMIN_PWD" --admin_email="$WP_ADMIN_EMAIL" --skip-email
@@ -34,4 +38,5 @@ if [ ! -f "wp-config.php" ]; then
 fi
 
 # On a besoin de ca pour faire tourner wordpress mais aussi pour que le container keep running
-php-fpm7 --nodaemonize
+# a revoir 
+#php-fpm --nodaemonize

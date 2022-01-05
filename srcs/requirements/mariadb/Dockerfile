@@ -34,4 +34,4 @@ RUN		chown -R mysql:mysql /var/lib/mysql
 # Attribution des droits pour le daemon
 RUN 	chown -R mysql:mysql /run/mysqld
 
-ENTRYPOINT [ "bash", "entrypoint.sh" ]
+ENTRYPOINT [ "sh", "entrypoint.sh" ]
