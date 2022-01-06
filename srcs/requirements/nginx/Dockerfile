@@ -6,7 +6,8 @@ RUN		apt-get update && apt-get upgrade -y
 # Installation de nginx et openssl
 #RUN		apt-get install  --no-cache --quiet --update nginx curl php8 php8-ctype
 RUN		apt-get install -y nginx curl openssl bash \
-		nginx vim procps openssl net-tools php-gd php-xml
+		nginx vim procps openssl net-tools 
+		#php7 php-gd php-xml
 
 #RUN		apk add --no-cache --quiet --update openssl
 
@@ -23,6 +24,8 @@ RUN 	openssl req -x509 -nodes \
 
 # Creation du dossier qui va contenir les fichiers de configurations de nginx pour le serveur
 RUN 	mkdir -p /var/run/nginx
+
+#RUN		chmod 777 /etc/php7/
 
 # Copie sur le container du fichier de configuration pour servir la page qu'on souhaite
 COPY	config/nginx.conf /etc/nginx/conf.d/default.conf
