@@ -1,15 +1,15 @@
 # Depuis l'image la plus legere
 #FROM	debian:buster
-FROM alpine:3.14
+FROM debian:buster
 
 # Mise a jour du gestionnaire de paquet, bonne pratique
- RUN		apk update
+# RUN		apk update
 # Mise a jour du gestionnaire de paquet
-#RUN		apt-get update && apt-get upgrade -y
+RUN		apt-get update && apt-get upgrade -y
 
 # Installation de mariadb et mariadb client
-RUN		apk add --no-cache --quiet --update mariadb mariadb-client vim
-#UN		apt-get install -y mariadb-server mariadb-client vim bash
+# RUN		apk add --no-cache --quiet --update mariadb mariadb-client vim
+RUN		apt-get install -y mariadb-server mariadb-client vim bash gettext-base
 
 # Creation du dossier pour le daemon
 RUN 	mkdir -p /var/lib/mysqld /run/mysqld
@@ -25,8 +25,8 @@ COPY 	./config/mariadb-server.cnf /etc/my.cnf.d/
 RUN 	chmod +x ./entrypoint.sh
 
 # Installation de la base de donnee effective et authentification
-RUN		mariadb-install-db --datadir=/var/lib/mysql \
-			--auth-root-authentication-method=normal
+#RUN		mariadb-install-db --datadir=/var/lib/mysql \
+#			--auth-root-authentication-method=normal
 
 # Le user mysql doit etre le owner des dossiers relatifs a mysql
 RUN		chown -R mysql:mysql /var/lib/mysql 

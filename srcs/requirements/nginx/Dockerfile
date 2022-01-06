@@ -5,12 +5,15 @@ RUN		apt-get update && apt-get upgrade -y
 
 # Installation de nginx et openssl
 #RUN		apt-get install  --no-cache --quiet --update nginx curl php8 php8-ctype
-RUN		apt-get install -y nginx curl openssl bash
+RUN		apt-get install -y nginx curl openssl bash \
+		nginx vim procps openssl net-tools php-gd php-xml
 
 #RUN		apk add --no-cache --quiet --update openssl
 
 # Creation du dossier qui va recueillir le certificat et la cle (pour HTTPS)
 RUN		mkdir -p /etc/nginx/ssl
+
+RUN		mkdir -p /var/run
 
 # Generation des certificats et cles au nom du student
 RUN 	openssl req -x509 -nodes \
