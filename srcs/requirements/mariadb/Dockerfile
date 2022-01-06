@@ -28,10 +28,17 @@ RUN 	chmod +x ./entrypoint.sh
 #RUN		mariadb-install-db --datadir=/var/lib/mysql \
 #			--auth-root-authentication-method=normal
 
+#RUN mysql-secure-installation -y
+
+EXPOSE 3306
+
+COPY ./config/mariadb-server.cnf /tmp
+RUN mv ./tmp/mariadb-server.cnf /etc/mysql/mariadb-server.cnf && chmod 0755 /etc/mysql/mariadb-server.cnf 
+
 # Le user mysql doit etre le owner des dossiers relatifs a mysql
 RUN		chown -R mysql:mysql /var/lib/mysql 
 
 # Attribution des droits pour le daemon
 RUN 	chown -R mysql:mysql /run/mysqld
 
-ENTRYPOINT [ "sh", "entrypoint.sh" ]
+ENTRYPOINT [ "bash", ./"entrypoint.sh" ]

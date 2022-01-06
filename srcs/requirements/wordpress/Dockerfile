@@ -10,9 +10,9 @@ RUN		apt-get update && apt-get upgrade -y
 # RUN		apk add --no-cache --quiet --update php7 php7-phar \
 # 			php7-json php7-curl php7-fpm php7-mysqli php7-iconv
 
-RUN		apt-get install -y curl bash vim wget sudo
+RUN		apt-get install -y curl bash vim wget sudo dumb-init tar
 RUN		apt-get install -y mariadb-client
-RUN		apt-get install -y php-fpm php-mysql tar
+RUN		apt-get install -y php-fpm php-mysql
 
 # On cree le dossier "standard"
 RUN		mkdir -p /var/www/wordpress 
@@ -51,9 +51,12 @@ RUN		chmod +x ./usr/bin/wp
 # Modification du workdir
 WORKDIR /var/www/wordpress
 
-RUN chmod 777 /var/www/wordpress
-
 RUN     useradd -ms /bin/bash USER
+# RUN 	su USER
+
+RUN	su USER && wp core download --path=/var/www/wordpress --allow-root
+#-f
+RUN chmod 777 /var/www/wordpress
 
 # On copie le fichier de config pour que ca puisse marcher sur le container
 COPY	config/wp-config /config/wp-config
@@ -64,7 +67,18 @@ COPY	./scripts/entrypoint.sh /tmp/entrypoint.sh
 # Ajout des droits d execution sur le script entrypoint
 RUN		chmod +x /tmp/entrypoint.sh
 
-RUN     echo "listen = 9000" >> /etc/php/7.3/fpm/pool.d/www.conf
+RUN echo "listen = 9000" >> /etc/php/7.3/fpm/pool.d/www.conf
+
+COPY ./config/wp-config.php /tmp/wp-config.php
+COPY ./scripts/entrypoint.sh /tmp/entrypooint.sh
+
+#RUN     echo "listen = 9000" >> /etc/php/7.3/fpm/pool.d/www.conf
 
 #On passe par un entrypoint pour eviter les hacky path
-ENTRYPOINT ["bash", "/tmp/entrypoint.sh"]
+#ENTRYPOINT ["bash", "/tmp/entrypoint.sh"]
+
+EXPOSE 9000 6379
+
+ENTRYPOINT [ "/usr/bin/dumb-init" ]
+
+CMD ["bash", "/tmp/entrypoint.sh"]
