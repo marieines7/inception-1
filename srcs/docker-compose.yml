@@ -6,17 +6,20 @@ volumes:
   mariadb-volume:
     driver: local
     driver_opts:
-      device: /home/malatini/data/database
+      #change the device when you work at school or on vm
+      #device: /home/malatini/data/database
+      device: /Users/mahautlatinis/Desktop/database
       type: volume
       o: bind
   wordpress-volume:
     driver: local
     driver_opts:
-      device: /home/malatini/data/wordpress
+      #device: /home/malatini/data/wordpress
+      device: /Users/mahautlatinis/Desktop/wordpress
       type: volume
       o: bind
 
-# docker network ls 
+# docker network ls
 networks:
   inception-network:
 
@@ -62,7 +65,7 @@ services:
       - wordpress-volume:/var/www/wordpress
     networks:
       - inception-network
-    environment: 
+    environment:
       - WP_URL=${WP_URL}
       - WP_DATABASE=${WP_DATABASE}
       - WP_TITLE=${WP_TITLE}

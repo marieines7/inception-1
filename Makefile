@@ -1,7 +1,9 @@
 SRCS 			= ./srcs
 DOCKER			= sudo docker
 COMPOSE 		= cd srcs/ && sudo docker-compose
-DATA_PATH 		= /home/malatini/data
+#Choose this data path at school or on your vm (with your login)
+#DATA_PATH 		= /home/malatini/data
+DATA_PATH 		= /Users/mahautlatinis/Desktop/my_inception
 
 .PHONY : all build up down pause unpause clean fclean re
 
@@ -21,7 +23,7 @@ build	:
 
 # Creates and start containers
 up:
-			${COMPOSE} up -d 
+			${COMPOSE} up -d
 
 # Stops containers and removes containers, networks, volumes, and images created by up
 down	:
@@ -31,7 +33,7 @@ down	:
 pause:
 			$(COMPOSE) pause
 
-# Unpause containers 
+# Unpause containers
 unpause:
 			$(COMPOSE) unpause
 
@@ -53,7 +55,7 @@ re		:	fclean all
 # Demande dans la fiche de correction
 # correc	:
 # 			@ sudo docker stop $(docker ps -qa)
-# 			@ sudo docker rm $(docker ps -qa) 
+# 			@ sudo docker rm $(docker ps -qa)
 # 			@ sudo docker rmi -f $(docker images -qa)
 # 			@ sudo docker volume rm $(docker volume ls -q)
 # 			@ sudo docker network rm $(docker ls -q)
